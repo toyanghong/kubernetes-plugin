@@ -1,8 +1,10 @@
-podTemplate(label: 'mypod', containers: [
+def label = "mypod-${UUID.randomUUID().toString()}"
+
+podTemplate(label: label, containers: [
         containerTemplate(name: 'busybox', image: 'busybox', ttyEnabled: true, command: '/bin/cat'),
     ]) {
 
-    node ('mypod') {
+    node (label) {
       stage('Run') {
         container('busybox') {
           sh """
