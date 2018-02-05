@@ -248,6 +248,7 @@ public class KubernetesCloud extends Cloud {
      * * cloud configuration
      * * environment variable <b>KUBERNETES_JENKINS_URL</b>
      * * Jenkins Location URL
+     * * "http://jenkins/"
      *
      * @return Jenkins URL to be used by agents launched by this cloud. Always ends with a trailing slash.
      * @throws IllegalStateException if no Jenkins URL could be computed.
@@ -264,7 +265,8 @@ public class KubernetesCloud extends Cloud {
                 )
         );
         if (url == null) {
-            throw new IllegalStateException("Jenkins URL for Kubernetes is null");
+            url = "http://jenkins/";
+            LOGGER.log(Level.FINE, "Using default Jenkins URL for Kubernetes: {0}", url);
         }
         url = url.endsWith("/") ? url : url + "/";
         return url;
